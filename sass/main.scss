@@ -1,0 +1,498 @@
+@forward "./reset";
+
+// *** Variables ***
+$color-primary: #191826;
+$color-secondary: #fcfaf9;
+$color-tertiary: #fa7453;
+
+$bg-hover-android: #ffb964;
+$bg-hover-ios: #66e2dc;
+
+// *** Mixins ***
+@mixin flex-settings(
+	$direction: row,
+	$justify: center,
+	$align: center,
+	$gap: null
+) {
+	display: flex;
+	flex-direction: $direction;
+	justify-content: $justify;
+	align-items: $align;
+
+	@if $gap {
+		gap: $gap;
+	}
+}
+
+@mixin font-settings(
+	$size: 2rem,
+	$weight: 400,
+	$line-height: null,
+	$l-spacing: null
+) {
+	font-size: $size;
+	font-weight: $weight;
+
+	@if $line-height {
+		line-height: $line-height;
+	}
+
+	@if $l-spacing {
+		letter-spacing: $l-spacing;
+	}
+}
+
+@mixin dimension-settings(
+	$width: null,
+	$height: null,
+	$min-height: null,
+	$max-width: null
+) {
+	@if $width {
+		width: $width;
+	}
+	@if $height {
+		height: $height;
+	}
+	@if $min-height {
+		min-height: $min-height;
+	}
+	@if $max-width {
+		max-width: $max-width;
+	}
+}
+
+// *** Mixin for html font-sizes ***
+@mixin responsive-settings(
+	$breakpoints: (
+		1150px,
+		1000px,
+		900px,
+		600px,
+		530px,
+	),
+	$f-sizes: (
+		55%,
+		50%,
+		45%,
+		40%,
+		62.5%,
+	)
+) {
+	@for $i from 1 through length($breakpoints) {
+		@media (max-width: nth($breakpoints, $i)) {
+			font-size: nth($f-sizes, $i);
+		}
+	}
+}
+
+// *** Mixin Reponsive for sections***
+
+@mixin respon-design($breakpoint) {
+	@if $breakpoint == tablet-lg {
+		@media (max-width: 850px) {
+			@content;
+		}
+	}
+
+	@if $breakpoint == tablet {
+		@media (max-width: 780px) {
+			@content;
+		}
+	}
+
+	@if $breakpoint == mobile-lg {
+		@media (max-width: 530px) {
+			@content;
+		}
+	}
+}
+
+// *** Main Styles ***
+html {
+	@include responsive-settings;
+}
+
+body {
+	@include flex-settings;
+	@include font-settings(2rem, 400);
+	@include dimension-settings($min-height: 100vh);
+	@include respon-design(mobile-lg) {
+		margin: 2rem 0;
+	}
+
+	font-family: "IBM Plex Sans", sans-serif;
+	overflow-x: hidden;
+	background-color: $color-secondary;
+	color: $color-primary;
+}
+
+.container {
+	@include flex-settings($direction: column);
+	@include dimension-settings($width: 100%, $max-width: 144rem);
+
+	position: relative;
+
+	picture {
+		@include dimension-settings($width: 100%);
+
+		position: absolute;
+		left: 0;
+		z-index: -1;
+	}
+}
+// *** Header ***
+.header {
+	@include dimension-settings($width: 100%, $max-width: 112rem);
+	@include respon-design(tablet-lg) {
+		padding: 6.4rem 4.8rem;
+	}
+
+	@include respon-design(mobile-lg) {
+		padding: 0 2.8rem;
+	}
+
+	position: relative;
+	padding: 6.4rem 0;
+
+	&__logo {
+		margin-bottom: 12.8rem;
+	}
+
+	&__img {
+		@include dimension-settings($width: 100%, $max-width: 31.2rem);
+
+		@include respon-design(tablet-lg) {
+			right: 0;
+		}
+
+		@include respon-design(mobile-lg) {
+			display: none;
+		}
+
+		position: absolute;
+		top: -5rem;
+		right: -16rem;
+	}
+
+	&__heading-primary {
+		@include font-settings(8.8rem, null, $l-spacing: -0.1rem);
+		@include dimension-settings($max-width: 92.8rem);
+
+		@include respon-design(tablet-lg) {
+			@include dimension-settings($width: 41.2rem);
+
+			font-size: 6.4rem;
+		}
+
+		@include respon-design(mobile-lg) {
+			font-size: 5rem;
+		}
+
+		margin-bottom: 4rem;
+	}
+
+	&__description {
+		@include dimension-settings($max-width: 73.6rem);
+
+		line-height: 150%;
+
+		@include respon-design(tablet-lg) {
+			@include dimension-settings($max-width: 50.4rem);
+		}
+
+		@include respon-design(mobile-lg) {
+			font-size: 1.8rem;
+		}
+	}
+}
+// *** End of Header ***
+
+// *** Main ***
+.main {
+	padding: 20rem 0;
+
+	@include respon-design(mobile-lg) {
+		padding: 5rem;
+		margin-top: 20rem;
+	}
+
+	&__content {
+		@include flex-settings(row, flex-end, center, 3.2rem);
+		@include dimension-settings(
+			$width: 100%,
+			$height: 60rem,
+			$max-width: 112rem
+		);
+
+		position: relative;
+		background-color: #191826;
+		border-radius: 1.2rem;
+		padding-right: 6.4rem;
+		z-index: 1;
+
+		@include respon-design(tablet-lg) {
+			gap: 0;
+		}
+
+		@include respon-design(mobile-lg) {
+			@include dimension-settings($height: auto); //tu som
+			@include dimension-settings($height: 110rem);
+
+			flex-direction: column;
+			padding-right: 0;
+			border-radius: 1rem;
+		}
+
+		&-bg {
+			position: absolute;
+			top: 0;
+			left: 50%;
+			translate: -50%;
+			z-index: 2;
+
+			@include respon-design(tablet-lg) {
+				left: 0;
+				translate: 0;
+			}
+		}
+
+		&-box {
+			@include dimension-settings(
+				$width: 100%,
+				$height: 63.2rem,
+				$max-width: 51.2rem
+			);
+
+			display: flex;
+			justify-content: center;
+			position: relative;
+
+			margin-bottom: 20rem;
+			z-index: 5;
+
+			@include respon-design(tablet-lg) {
+				@include dimension-settings($width: 35.6rem);
+			}
+
+			@include respon-design(mobile-lg) {
+				margin-bottom: 8rem;
+			}
+
+			&-app {
+				@include dimension-settings($width: 36.9rem, $height: 64.2rem);
+
+				@include respon-design(tablet-lg) {
+					@include dimension-settings(
+						$width: 27rem,
+						$height: 55.6rem
+					);
+				}
+			}
+		}
+
+		&-card {
+			@include dimension-settings(
+				$width: 100%,
+				$height: 63.2rem,
+				$max-width: 51.2rem
+			);
+
+			position: relative;
+			border-radius: 1.6rem;
+			background-color: $color-tertiary;
+
+			margin-top: 20rem;
+			padding: 5.6rem;
+			z-index: 5;
+
+			@include respon-design(tablet-lg) {
+				@include dimension-settings($width: 35.6rem);
+
+				padding: 4.8rem;
+			}
+
+			@include respon-design(mobile-lg) {
+				margin-top: 0;
+
+				border-radius: 0 0 1rem 1rem;
+			}
+		}
+
+		&-heading {
+			@include font-settings(4rem, 700, 110%);
+
+			margin-bottom: 2.5rem;
+		}
+
+		&-description {
+			line-height: 150%;
+			margin-bottom: 4rem;
+
+			@include respon-design(tablet-lg) {
+				font-size: 1.8rem;
+			}
+		}
+
+		&-price {
+			@include flex-settings(row, null, center, 1.6rem);
+			margin-bottom: 4.8rem;
+
+			&-amount {
+				@include font-settings(6.4rem, 700, 110%);
+			}
+
+			&-duration {
+				line-height: 150%;
+			}
+		}
+
+		&-btn {
+			&:link,
+			&:visited {
+				@include flex-settings(row, center, center, 1rem);
+				@include font-settings(1.8rem, 700, 6.4rem);
+				@include dimension-settings($max-width: 40rem);
+
+				border-radius: 1.2rem;
+				transition: background-color 0.3s ease, color 0.3s ease;
+
+				// ***  One exception without a class ***
+				svg path {
+					transition: fill 0.3s;
+				}
+			}
+		}
+
+		&-ios {
+			&:link,
+			&:visited {
+				background-color: $color-primary;
+				color: $color-secondary;
+				margin-bottom: 1.6rem;
+			}
+
+			&:hover,
+			&:active {
+				background-color: $bg-hover-ios;
+				color: $color-primary;
+
+				// ***  One exception without a class ***
+				svg path {
+					fill: #191826;
+				}
+			}
+		}
+
+		&-android {
+			&:link,
+			&:visited {
+				background-color: $color-secondary;
+				color: $color-primary;
+			}
+
+			&:hover,
+			&:active {
+				background-color: $bg-hover-android;
+			}
+		}
+	}
+}
+// *** End ofMain ***
+
+// *** Footer ***
+.footer {
+	@include flex-settings(row, space-between, center);
+	@include dimension-settings($width: 100%, $max-width: 112rem);
+
+	flex-wrap: wrap;
+	padding: 6.4rem 0 8rem 0;
+
+	@include respon-design(tablet-lg) {
+		padding: 6.4rem 4rem 8rem;
+	}
+
+	@include respon-design(mobile-lg) {
+		flex-direction: column;
+		flex-wrap: nowrap;
+		gap: 2.4rem;
+
+		padding: 0 2.8rem;
+	}
+
+	&__logo {
+		align-self: flex-start;
+
+		@include respon-design(tablet) {
+			margin-bottom: 2rem;
+			margin-right: 10rem;
+		}
+
+		@include respon-design(mobile-lg) {
+			margin-bottom: 0;
+			margin-right: 0;
+		}
+	}
+
+	&__text-box {
+		@include font-settings(1.6rem, null, 150%);
+		@include dimension-settings($width: 100%, $max-width: 56rem);
+
+		@include respon-design(tablet) {
+			order: 2;
+		}
+
+		@include respon-design(mobile-lg) {
+			flex-direction: column;
+			flex-wrap: nowrap;
+			align-self: flex-start;
+			order: initial;
+		}
+	}
+
+	&__support-link {
+		&:link,
+		&:visited {
+			@include font-settings(1.6rem, 700, 150%);
+
+			color: $color-primary;
+			transition: color 0.3s;
+		}
+
+		&:hover,
+		&:active {
+			color: $color-tertiary;
+		}
+	}
+	&__nav {
+		display: flex;
+
+		@include respon-design(tablet) {
+			align-self: flex-end;
+		}
+
+		@include respon-design(mobile-lg) {
+			align-self: flex-start;
+		}
+	}
+
+	&__list {
+		@include flex-settings(row, center, center, 3.2rem);
+
+		&-link {
+			&:link,
+			&:visited {
+				color: inherit;
+				transition: color 0.3s;
+			}
+
+			&:hover,
+			&:active {
+				color: $color-tertiary;
+			}
+		}
+	}
+}
+
+// *** End of Footer ***
