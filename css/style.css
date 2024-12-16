@@ -205,7 +205,13 @@ body {
 }
 
 .main {
+  width: 112rem;
   padding: 20rem 0;
+}
+@media (max-width: 850px) {
+  .main {
+    width: auto;
+  }
 }
 @media (max-width: 530px) {
   .main {
@@ -235,7 +241,6 @@ body {
 }
 @media (max-width: 530px) {
   .main__content {
-    height: auto;
     height: 110rem;
     flex-direction: column;
     padding-right: 0;

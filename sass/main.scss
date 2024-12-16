@@ -211,7 +211,12 @@ body {
 
 // *** Main ***
 .main {
+	width: 112rem;
 	padding: 20rem 0;
+
+	@include respon-design(tablet-lg) {
+		width: auto;
+	}
 
 	@include respon-design(mobile-lg) {
 		padding: 5rem;
@@ -237,7 +242,6 @@ body {
 		}
 
 		@include respon-design(mobile-lg) {
-			@include dimension-settings($height: auto); //tu som
 			@include dimension-settings($height: 110rem);
 
 			flex-direction: column;
